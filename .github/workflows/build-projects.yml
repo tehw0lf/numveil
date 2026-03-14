@@ -30,5 +30,6 @@ jobs:
       artifact_path: "dist"
       docker_meta: '[{"name":"number-game-api","file":"Dockerfile.api"},{"name":"number-game-app","file":"Dockerfile.app"}]'
       cyclonedx_ignore_npm_errors: true
+      npm_audit_omit_dev: true
     secrets:
       ANDROID_STOREPASS: ${{ secrets.ANDROID_STOREPASS }}
