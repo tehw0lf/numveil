@@ -1,6 +1,6 @@
 {
   "name": "@number-game/source",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "scripts": {
     "affected:lint": "nx affected:lint",
