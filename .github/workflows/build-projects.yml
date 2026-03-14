@@ -26,10 +26,10 @@ jobs:
       build_branch: "run affected:build"
       build_main: "run build --skip-nx-cache"
       post_build_script: "run sync"
-      event_name: ${{ github.event_name }}
       app_root: "apps/number-game"
       artifact_path: "dist"
       docker_meta: '[{"name":"number-game-api","file":"Dockerfile.api"},{"name":"number-game-app","file":"Dockerfile.app"}]'
       cyclonedx_ignore_npm_errors: true
+      npm_audit_omit_dev: true
     secrets:
       ANDROID_STOREPASS: ${{ secrets.ANDROID_STOREPASS }}
