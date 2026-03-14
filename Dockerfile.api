@@ -1,7 +1,8 @@
 FROM node:alpine
+RUN apk upgrade --no-cache
 RUN npm install -g npm@latest
 WORKDIR /usr/src/app
 COPY dist/api/* ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 EXPOSE 3000
 CMD ["node", "main"]
