@@ -7,7 +7,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { environment, GameMode, Player } from '@number-game/core';
+import { environment, GameMode, Player } from '@numveil/core';
 import generateAvatar from 'github-like-avatar-generator';
 import { WebSocket } from 'ws';
 import { randomInt, randomBytes } from 'crypto';

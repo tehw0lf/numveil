@@ -1,0 +1,132 @@
+<div class="page">
+  <div class="logo">NUMVEIL</div>
+
+  <!-- User header -->
+  <div class="card card--wide">
+    <div class="user-header">
+      <img class="avatar" [src]="stateService.userInfo()?.pic" alt="avatar" />
+      <div>
+        <div class="user-name">{{ stateService.userInfo()?.name }}</div>
+        <div class="text-muted mt-8">
+          Session {{ stateService.sessionUser()?.sessionID }}
+        </div>
+      </div>
+      <div style="margin-left: auto">
+        <button
+          class="btn btn--danger"
+          style="width: auto; padding: 8px 16px"
+          (click)="leaveSession()"
+        >
+          Leave
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result card -->
+  <div class="card card--wide">
+    @if (stateService.winningNumber() < 0) {
+      <!-- Waiting for all guesses -->
+      <div class="waiting">
+        <div class="waiting__dots"><span></span><span></span><span></span></div>
+        <div style="font-size: 0.9rem">Waiting for all players to guess…</div>
+      </div>
+    } @else {
+      <!-- Result revealed -->
+      @if (!stateService.isNumberDecider()) {
+        <div class="result-hero">
+          @if (stateService.isWinner()) {
+            <span
+              class="result-hero__emoji"
+              [class.emoji--bounce]="stateService.isWinner()"
+              >🏆</span
+            >
+            @if (stateService.userGuess() === stateService.winningNumber()) {
+              <div class="result-hero__title result-hero__title--win">
+                Perfect guess! 🎯
+              </div>
+            } @else {
+              <div class="result-hero__title result-hero__title--win">
+                You nailed it!
+              </div>
+            }
+          } @else {
+            <span class="result-hero__emoji">😔</span>
+            <div class="result-hero__title result-hero__title--lose">
+              Not this time
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="result-hero">
+          <span class="result-hero__emoji">🎯</span>
+          <div class="result-hero__title" style="color: var(--text-secondary)">
+            Your number was revealed
+          </div>
+        </div>
+      }
+
+      <div style="text-align: center; margin: 8px 0 20px">
+        <div class="result-number__label">The secret number</div>
+        <div class="result-number">{{ stateService.winningNumber() }}</div>
+        @if (!stateService.isNumberDecider()) {
+          <div class="text-muted">
+            Your guess: {{ stateService.userGuess() }}
+          </div>
+        }
+      </div>
+
+      <!-- Winners list -->
+      @if (stateService.winners().length > 0) {
+        <div class="section-label">Winners</div>
+        <ul class="player-list">
+          @for (winner of stateService.winners(); track winner.uuid) {
+            <li class="player-item">
+              <img class="avatar avatar--sm" [src]="winner.pic" alt="avatar" />
+              <span class="player-item__name">{{ winner.name }}</span>
+              @if (winner.guess === stateService.winningNumber()) {
+                <span class="player-item__status ready"
+                  >{{ winner.guess }} 🎯 exact!</span
+                >
+              } @else {
+                <span class="player-item__status ready">{{
+                  winner.guess
+                }}</span>
+              }
+            </li>
+          }
+        </ul>
+      }
+
+      <div class="btn-row mt-20">
+        <button class="btn btn--success" (click)="newRound()">
+          Play again
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- All players -->
+  <div class="card card--wide">
+    <div class="section-label">
+      Players ({{ stateService.players().length }})
+    </div>
+    <ul class="player-list">
+      @for (player of stateService.players(); track player.uuid) {
+        <li class="player-item">
+          <img class="avatar avatar--sm" [src]="player.pic" alt="avatar" />
+          <span class="player-item__name">{{ player.name }}</span>
+          @if (hasGuessed(player)) {
+            @if (player.guess === undefined) {
+              <span class="player-item__status decided">decider</span>
+            } @else {
+              <span class="player-item__status ready">guessed ✓</span>
+            }
+          } @else {
+            <span class="player-item__status">waiting…</span>
+          }
+        </li>
+      }
+    </ul>
+  </div>
+</div>
