@@ -1,5 +1,5 @@
 {
-  "name": "number-game",
+  "name": "numveil",
   "dependencies": {
     "@capacitor/android": "../node_modules/@capacitor/android"
   },

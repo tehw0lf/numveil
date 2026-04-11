@@ -6,27 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Serve frontend (Angular, port 4200)
-npx nx serve number-game
+npx nx serve numveil
 
 # Serve backend (NestJS WebSocket API)
 npx nx serve api
 
 # Run tests
-npx nx test number-game        # Frontend unit tests
+npx nx test numveil        # Frontend unit tests
 npx nx test api                # Backend unit tests
 npx nx test <project> -- --testFile=<path>  # Single test file
 
 # E2E tests
-npx nx e2e number-game-e2e    # Playwright frontend E2E
+npx nx e2e numveil-e2e    # Playwright frontend E2E
 npx nx e2e api-e2e            # Jest backend E2E
 
 # Lint
-npx nx lint number-game
+npx nx lint numveil
 npx nx lint api
 
 # Build
 npm run build                  # Build all projects
-npx nx build number-game       # Frontend only
+npx nx build numveil       # Frontend only
 npx nx build api               # Backend only
 
 # Mobile (Capacitor/Android)
@@ -44,8 +44,8 @@ npm run affected:lint && npm run affected:test && npm run affected:build && npm 
 This is an Nx monorepo with three projects:
 
 - **`apps/api`** — NestJS WebSocket server (single file: `app.gateway.ts`)
-- **`apps/number-game`** — Angular 21 frontend (web + Android via Capacitor)
-- **`libs/core`** — Shared types and environment config imported by both apps as `@number-game/core`
+- **`apps/numveil`** — Angular 21 frontend (web + Android via Capacitor)
+- **`libs/core`** — Shared types and environment config imported by both apps as `@numveil/core`
 
 ### Game mechanics
 
@@ -87,7 +87,7 @@ The environment file is the single source of truth for the WebSocket URL used by
 
 ### Mobile
 
-The Angular app is wrapped via Capacitor (`apps/number-game/capacitor.config.ts`). The Android project lives in `apps/number-game/android/`. The `npm run sync` script copies the built web assets into the Android project.
+The Angular app is wrapped via Capacitor (`apps/numveil/capacitor.config.ts`). The Android project lives in `apps/numveil/android/`. The `npm run sync` script copies the built web assets into the Android project.
 
 ### Docker
 
