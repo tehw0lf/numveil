@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@number-game/core": ["libs/core/index.ts"]
+      "@numveil/core": ["libs/core/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

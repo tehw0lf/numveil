@@ -1,0 +1,53 @@
+<div class="page">
+  <div class="logo">
+    NUMVEIL
+    <span class="logo__sub">the number guessing game</span>
+  </div>
+
+  <div class="card">
+    <div class="field">
+      <label for="name-input">Your name</label>
+      <input
+        id="name-input"
+        class="input"
+        type="text"
+        placeholder="Enter your name"
+        [(ngModel)]="name"
+        (keyup.enter)="joinSession()"
+      />
+    </div>
+
+    @if (mode() === 'join') {
+      <div class="field">
+        <label for="session-input">Session ID</label>
+        <input
+          id="session-input"
+          class="input"
+          type="text"
+          placeholder="6-digit code"
+          [(ngModel)]="sessionID"
+          (keyup.enter)="joinSession()"
+        />
+      </div>
+    }
+
+    <div class="btn-row">
+      @if (mode() === 'create') {
+        <button class="btn btn--primary" (click)="joinSession()">
+          Create new session
+        </button>
+        <div class="divider">or</div>
+        <button class="btn btn--ghost" (click)="setMode('join')">
+          Join existing session
+        </button>
+      } @else {
+        <button class="btn btn--primary" (click)="joinSession()">
+          Join session
+        </button>
+        <button class="btn btn--ghost" (click)="setMode('create')">
+          ← Back
+        </button>
+      }
+    </div>
+  </div>
+</div>

@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">number-game</string>
-    <string name="title_activity_main">number-game</string>
-    <string name="package_name">de.tehwolf</string>
-    <string name="custom_url_scheme">de.tehwolf</string>
-</resources>
