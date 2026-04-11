@@ -23,7 +23,7 @@ jobs:
       tool: "npm"
       lint: "run affected:lint"
       test: "run affected:test"
-      build_branch: "run build --skip-nx-cache"
+      build_branch: "run affected:build"
       build_main: "run build --skip-nx-cache"
       post_build_script: "run sync"
       app_root: "apps/numveil"
