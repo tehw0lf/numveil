@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'de.tehwolf',
   appName: 'Numveil',
-  webDir: '../dist/numveil/browser',
+  webDir: '../../dist/numveil/browser',
   server: {
     androidScheme: 'https',
   },
