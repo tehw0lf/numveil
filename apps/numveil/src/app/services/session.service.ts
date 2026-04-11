@@ -16,15 +16,26 @@ export class SessionService {
   private configService: ConfigService = inject(ConfigService);
 
   private closeSubject$ = new Subject();
-  private subject$: WebSocketSubject<any> = webSocket({
-    url: `${this.configService.apiUrl}:${this.configService.apiPort}`,
-    closeObserver: this.closeSubject$,
-  });
+  private subject$: WebSocketSubject<any> | null = null;
 
   closeObservable$: Observable<any> = this.closeSubject$.asObservable();
 
+  private getSocket(): WebSocketSubject<any> {
+    if (!this.subject$) {
+      this.subject$ = webSocket({
+        url: this.configService.getServerUrl(),
+        closeObserver: this.closeSubject$,
+      });
+    }
+    return this.subject$;
+  }
+
+  reconnect(): void {
+    this.subject$ = null;
+  }
+
   initializeConnection(): void {
-    this.subject$
+    this.getSocket()
       .asObservable()
       .pipe(
         tap((data: { eventType: string; serverState: any }) => {
@@ -66,7 +77,7 @@ export class SessionService {
   }
 
   leaveSession(): void {
-    this.subject$.next({
+    this.getSocket().next({
       event: 'leaveSession',
       data: this.stateService.sessionUser(),
     });
@@ -77,7 +88,7 @@ export class SessionService {
     this.closeObservable$.subscribe(() => {
       this.stateService.resetSession();
     });
-    this.subject$.next({
+    this.getSocket().next({
       event: 'joinSession',
       data: {
         uuid: '',
@@ -88,7 +99,7 @@ export class SessionService {
   }
 
   sendGuess(guess?: number): void {
-    this.subject$.next({
+    this.getSocket().next({
       event: 'guess',
       data: {
         uuid: this.stateService.sessionUser()?.uuid,
@@ -101,7 +112,7 @@ export class SessionService {
   }
 
   newRound(): void {
-    this.subject$.next({
+    this.getSocket().next({
       event: 'newRound',
       data: {
         uuid: this.stateService.sessionUser()?.uuid,
