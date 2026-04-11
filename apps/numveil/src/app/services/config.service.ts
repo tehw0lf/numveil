@@ -42,6 +42,9 @@ export class ConfigService {
   }
 
   private buildUrl(): string {
+    if (!this.config.api_port) {
+      return this.config.api_url;
+    }
     return `${this.config.api_url}:${this.config.api_port}`;
   }
 }
