@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '@numveil/core';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
+import { ConfigService } from './config.service';
 import { StateService } from './state.service';
 
 @Injectable({
@@ -13,10 +13,11 @@ import { StateService } from './state.service';
 export class SessionService {
   private router: Router = inject(Router);
   private stateService: StateService = inject(StateService);
+  private configService: ConfigService = inject(ConfigService);
 
   private closeSubject$ = new Subject();
   private subject$: WebSocketSubject<any> = webSocket({
-    url: `${environment.api_url}:${environment.api_port}`,
+    url: `${this.configService.apiUrl}:${this.configService.apiPort}`,
     closeObserver: this.closeSubject$,
   });
 
