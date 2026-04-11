@@ -49,5 +49,27 @@
         </button>
       }
     </div>
+
+    <div class="advanced">
+      <button class="btn btn--ghost btn--small" (click)="toggleAdvanced()">
+        {{ showAdvanced() ? '▲ Hide' : '▼ Advanced' }}
+      </button>
+
+      @if (showAdvanced()) {
+        <div class="field">
+          <label for="server-url-input">Server URL</label>
+          <input
+            id="server-url-input"
+            class="input"
+            type="text"
+            [ngModel]="serverUrl()"
+            (ngModelChange)="applyServerUrl($event)"
+          />
+        </div>
+        <button class="btn btn--ghost btn--small" (click)="resetServerUrl()">
+          Reset to default
+        </button>
+      }
+    </div>
   </div>
 </div>

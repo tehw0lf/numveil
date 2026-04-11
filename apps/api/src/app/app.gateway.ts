@@ -31,7 +31,11 @@ const sessionInfo = new Map<
   }
 >();
 
-@WebSocketGateway(environment.api_port)
+@WebSocketGateway(Number(process.env['API_PORT']) || environment.api_port, {
+  cors: {
+    origin: process.env['CORS_ORIGIN'] || 'http://localhost',
+  },
+})
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
