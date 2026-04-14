@@ -19,6 +19,7 @@ jobs:
       contents: write
       packages: write
       security-events: write
+      pull-requests: write
     with:
       tool: "npm"
       lint: "run affected:lint"
