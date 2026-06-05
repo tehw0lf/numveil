@@ -4,6 +4,6 @@
     "@capacitor/android": "../node_modules/@capacitor/android"
   },
   "devDependencies": {
-    "@capacitor/cli": "8.0.2"
+    "@capacitor/cli": "8.3.0"
   }
 }
