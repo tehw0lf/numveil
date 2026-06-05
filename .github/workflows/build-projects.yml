@@ -24,12 +24,14 @@ jobs:
       tool: "npm"
       lint: "run affected:lint"
       test: "run affected:test"
+      e2e: "run affected:e2e"
       build_branch: "run affected:build"
       build_main: "run build --skip-nx-cache"
       post_build_script: "run sync"
       app_root: "apps/numveil"
       artifact_path: "dist"
-      docker_meta: "[{\"name\":\"numveil-api\",\"file\":\"Dockerfile.api\"},{\"name\":\
+      docker_meta:
+        "[{\"name\":\"numveil-api\",\"file\":\"Dockerfile.api\"},{\"name\":\
         \"numveil-app\",\"file\":\"Dockerfile.app\"}]"
       cyclonedx_ignore_npm_errors: true
       npm_audit_omit_dev: true

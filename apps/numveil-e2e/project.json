@@ -4,6 +4,17 @@
   "projectType": "application",
   "sourceRoot": "apps/numveil-e2e/src",
   "implicitDependencies": ["numveil"],
-  "// targets": "to see all targets run: nx show project numveil-e2e --web",
-  "targets": {}
+  "targets": {
+    "e2e": {
+      "executor": "@nx/playwright:playwright",
+      "options": {
+        "config": "apps/numveil-e2e/playwright.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/dist/.playwright"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
 }
