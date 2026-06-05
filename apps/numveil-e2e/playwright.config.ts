@@ -41,10 +41,7 @@ export default defineConfig({
       use: { ...devices['Desktop Firefox'] },
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // webkit requires libicu74, libflite1, libmanette-0.2-0 which are unavailable on Arch Linux
 
     // Uncomment for mobile browsers support
     /* {
