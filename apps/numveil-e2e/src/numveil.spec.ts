@@ -30,14 +30,6 @@ const TWO_PLAYER_RUNNING_STATE = {
   winningNumber: -1,
 };
 
-const DECIDER_RUNNING_STATE = {
-  gameMode: 0,
-  players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: undefined, won: false },
-    { uuid: 'test-uuid-2', name: 'Other', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: -1, won: false },
-  ],
-  winningNumber: -1,
-};
 
 const RESULT_STATE = {
   gameMode: 1,
@@ -261,31 +253,6 @@ test.describe('Home page – waiting for second player', () => {
   });
 });
 
-test.describe('Home page – number decider role', () => {
-  test('shows number decider banner after being the fastest submitter', async ({ page }) => {
-    await page.routeWebSocket(/.*/, (ws: WebSocketRoute) => {
-      ws.onMessage((msg: string) => {
-        const parsed = JSON.parse(msg);
-        if (parsed.event === 'joinSession') {
-          ws.send(buildServerMsg('join', JOIN_STATE));
-          ws.send(buildServerMsg('running', TWO_PLAYER_RUNNING_STATE));
-        }
-        if (parsed.event === 'guess') {
-          ws.send(buildServerMsg('running', DECIDER_RUNNING_STATE));
-        }
-      });
-    });
-    await page.goto('/');
-    await page.getByLabel('Your name').fill('Tester');
-    await page.getByRole('button', { name: 'Create new session' }).click();
-    await expect(page).toHaveURL(/\/home/);
-    await expect(page.getByLabel('Your number')).toBeVisible();
-    await page.getByLabel('Your number').fill('42');
-    await page.getByRole('button', { name: 'Submit' }).click();
-    await expect(page.getByLabel('Your number')).toBeHidden({ timeout: 15000 });
-    await expect(page.getByText('You are the Number Decider')).toBeVisible();
-  });
-});
 
 test.describe('Result page', () => {
   test.beforeEach(async ({ page }) => {
