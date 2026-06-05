@@ -282,8 +282,8 @@ test.describe('Home page – number decider role', () => {
     await expect(page.getByLabel('Your number')).toBeVisible();
     await page.getByLabel('Your number').fill('42');
     await page.getByRole('button', { name: 'Submit' }).click();
+    await expect(page.getByLabel('Your number')).toBeHidden({ timeout: 15000 });
     await expect(page.getByText('You are the Number Decider')).toBeVisible();
-    await expect(page.getByLabel('Your number')).toBeHidden();
   });
 });
 
