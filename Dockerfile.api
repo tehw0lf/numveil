@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:24.17-alpine
 RUN apk upgrade --no-cache && npm install -g npm@latest \
   && npm pack brace-expansion@2.0.3 --pack-destination /tmp \
   && tar -xzf /tmp/brace-expansion-2.0.3.tgz -C /tmp \
@@ -6,6 +6,9 @@ RUN apk upgrade --no-cache && npm install -g npm@latest \
   && npm pack picomatch@4.0.4 --pack-destination /tmp \
   && tar -xzf /tmp/picomatch-4.0.4.tgz -C /tmp \
   && cp -r /tmp/package/. /usr/local/lib/node_modules/npm/node_modules/tinyglobby/node_modules/picomatch/ \
+  && npm pack undici@6.27.0 --pack-destination /tmp \
+  && tar -xzf /tmp/undici-6.27.0.tgz -C /tmp \
+  && cp -r /tmp/package/. /usr/local/lib/node_modules/npm/node_modules/undici/ \
   && rm -rf /tmp/package /tmp/*.tgz
 WORKDIR /usr/src/app
 COPY dist/api/* ./
