@@ -4,7 +4,7 @@
   <!-- User header -->
   <div class="card card--wide">
     <div class="user-header">
-      <img class="avatar" [src]="stateService.userInfo()?.pic" alt="avatar" />
+      <img class="avatar" [src]="$safeNavigationMigration(stateService.userInfo()?.pic)" alt="avatar" />
       <div>
         <div class="user-name">{{ stateService.userInfo()?.name }}</div>
         <div class="text-muted mt-8">Playing as you</div>
