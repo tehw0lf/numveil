@@ -16,7 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@numveil/core": ["libs/core/index.ts"]
-    }
+    },
+    "ignoreDeprecations": "6.0",
+    "strict": false,
+    "noUncheckedSideEffectImports": false
   },
   "exclude": ["node_modules", "tmp"]
 }
