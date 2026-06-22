@@ -1,6 +1,6 @@
 {
   "name": "@numveil/source",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "license": "MIT",
   "scripts": {
     "affected:e2e": "nx affected:e2e",
