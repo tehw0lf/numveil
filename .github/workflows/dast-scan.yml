@@ -17,3 +17,4 @@ jobs:
       target_url: "https://numveil.tehwolf.de"
       scan_type: "full"
       max_duration_minutes: "45"
+      rules_file: ".zap/rules.tsv"
