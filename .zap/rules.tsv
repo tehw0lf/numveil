@@ -6,3 +6,4 @@
 10096	IGNORE	Timestamp Disclosure — build timestamps in JS bundles, not sensitive data
 40025	IGNORE	Proxy Disclosure — Cloudflare server header cannot be suppressed without a paid Cloudflare plan
 10050	IGNORE	Retrieved from Cache — Cloudflare CDN caching behavior, not a vulnerability
+10104	IGNORE	User Agent Fuzzer — static Angular app responds identically to all user agents, not a vulnerability
