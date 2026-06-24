@@ -12,3 +12,4 @@ Rules suppressed in `.zap/rules.tsv` with justification:
 | 10096 | Timestamp Disclosure - Unix | Build timestamps embedded in JS bundles by the build tool. Not sensitive data. |
 | 40025 | Proxy Disclosure | Cloudflare's `server` header reveals proxy presence. Suppression requires a paid Cloudflare plan — accepted risk. |
 | 10050 | Retrieved from Cache | Cloudflare CDN caching behavior. Not a vulnerability. |
+| 10104 | User Agent Fuzzer | Static Angular app serves identical content regardless of user agent. Not a vulnerability. |
