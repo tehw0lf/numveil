@@ -1,7 +1,7 @@
 import {
   APP_INITIALIZER,
   ApplicationConfig,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -9,7 +9,7 @@ import { ConfigService } from './services/config.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(appRoutes),
     {
       provide: APP_INITIALIZER,

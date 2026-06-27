@@ -13,7 +13,7 @@
         "outputPath": "dist/numveil",
         "index": "apps/numveil/src/index.html",
         "browser": "apps/numveil/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [],
         "tsConfig": "apps/numveil/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -39,7 +39,8 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "sourceMap": true
         },
         "development": {
           "optimization": false,
