@@ -1,6 +1,6 @@
 {
   "name": "@numveil/source",
-  "version": "2.1.28",
+  "version": "2.1.29",
   "license": "MIT",
   "scripts": {
     "affected:e2e": "nx affected:e2e",
@@ -9,7 +9,10 @@
     "affected:build": "nx affected:build",
     "build": "nx run-many -t build",
     "affected": "nx affected",
-    "sync": "nx run numveil:sync"
+    "sync": "nx run numveil:sync",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "e2e": "nx e2e numveil-e2e"
   },
   "private": true,
   "dependencies": {
