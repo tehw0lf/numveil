@@ -1,11 +1,11 @@
 {
   "name": "@numveil/source",
-  "version": "2.1.29",
+  "version": "2.1.30",
   "license": "MIT",
   "scripts": {
     "affected:e2e": "nx affected:e2e",
     "affected:lint": "nx affected:lint",
-    "affected:test": "nx affected:test --ci --code-coverage",
+    "affected:test": "nx affected:test --configuration=ci",
     "affected:build": "nx affected:build",
     "build": "nx run-many -t build",
     "affected": "nx affected",
