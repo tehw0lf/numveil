@@ -53,6 +53,7 @@ Shared code lives in **`libs/core`**, a plain TypeScript folder (not an Nx proje
 One player per session becomes the "number decider" — they submit a secret number first (`guess` is `undefined` in the server state for that player). Other players submit guesses. When all non-decider players have guessed, winners are calculated.
 
 **Two game modes** (auto-selected server-side):
+
 - `GameMode.exact` — players must guess the exact number (2-player sessions)
 - `GameMode.distance` — closest guess wins (3+ player sessions, switches automatically on third join)
 
@@ -60,18 +61,18 @@ One player per session becomes the "number decider" — they submit a secret num
 
 All messages use `{ event: string, data: any }` from client and `{ eventType: string, serverState: any }` from server.
 
-| Client event | Purpose |
-|---|---|
-| `joinSession` | Create or join a session (omit `sessionID` to create new) |
-| `guess` | Submit a number (first submission becomes the secret number) |
-| `newRound` | Reset the current session for another round |
-| `leaveSession` | Remove self from session |
+| Client event   | Purpose                                                      |
+| -------------- | ------------------------------------------------------------ |
+| `joinSession`  | Create or join a session (omit `sessionID` to create new)    |
+| `guess`        | Submit a number (first submission becomes the secret number) |
+| `newRound`     | Reset the current session for another round                  |
+| `leaveSession` | Remove self from session                                     |
 
-| Server event | Purpose |
-|---|---|
-| `join` | Confirms join, sends back `uuid`, `sessionID`, `pic` |
-| `running` | Broadcasts updated session state to all players |
-| `restart` | Signals a new round has started |
+| Server event | Purpose                                              |
+| ------------ | ---------------------------------------------------- |
+| `join`       | Confirms join, sends back `uuid`, `sessionID`, `pic` |
+| `running`    | Broadcasts updated session state to all players      |
+| `restart`    | Signals a new round has started                      |
 
 ### Frontend state management
 
