@@ -16,7 +16,13 @@ const JOIN_STATE = {
 const ONE_PLAYER_RUNNING_STATE = {
   gameMode: 0,
   players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: -1, won: false },
+    {
+      uuid: 'test-uuid-1',
+      name: 'Tester',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: -1,
+      won: false,
+    },
   ],
   winningNumber: -1,
 };
@@ -24,18 +30,41 @@ const ONE_PLAYER_RUNNING_STATE = {
 const TWO_PLAYER_RUNNING_STATE = {
   gameMode: 0,
   players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: -1, won: false },
-    { uuid: 'test-uuid-2', name: 'Other', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: -1, won: false },
+    {
+      uuid: 'test-uuid-1',
+      name: 'Tester',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: -1,
+      won: false,
+    },
+    {
+      uuid: 'test-uuid-2',
+      name: 'Other',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: -1,
+      won: false,
+    },
   ],
   winningNumber: -1,
 };
 
-
 const RESULT_STATE = {
   gameMode: 1,
   players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: 42, won: true },
-    { uuid: 'test-uuid-2', name: 'Other', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: undefined, won: false },
+    {
+      uuid: 'test-uuid-1',
+      name: 'Tester',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: 42,
+      won: true,
+    },
+    {
+      uuid: 'test-uuid-2',
+      name: 'Other',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: undefined,
+      won: false,
+    },
   ],
   winningNumber: 42,
 };
@@ -43,8 +72,20 @@ const RESULT_STATE = {
 const RESULT_STATE_LOSER = {
   gameMode: 1,
   players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: 10, won: false },
-    { uuid: 'test-uuid-2', name: 'Other', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: undefined, won: true },
+    {
+      uuid: 'test-uuid-1',
+      name: 'Tester',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: 10,
+      won: false,
+    },
+    {
+      uuid: 'test-uuid-2',
+      name: 'Other',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: undefined,
+      won: true,
+    },
   ],
   winningNumber: 42,
 };
@@ -52,8 +93,20 @@ const RESULT_STATE_LOSER = {
 const RESULT_STATE_DISTANCE_WINNER = {
   gameMode: 0,
   players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: 40, won: true },
-    { uuid: 'test-uuid-2', name: 'Other', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: undefined, won: false },
+    {
+      uuid: 'test-uuid-1',
+      name: 'Tester',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: 40,
+      won: true,
+    },
+    {
+      uuid: 'test-uuid-2',
+      name: 'Other',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: undefined,
+      won: false,
+    },
   ],
   winningNumber: 42,
 };
@@ -61,15 +114,32 @@ const RESULT_STATE_DISTANCE_WINNER = {
 const RESULT_STATE_DECIDER = {
   gameMode: 1,
   players: [
-    { uuid: 'test-uuid-1', name: 'Tester', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: undefined, won: false },
-    { uuid: 'test-uuid-2', name: 'Other', pic: 'data:image/png;base64,iVBORw0KGgo=', guess: 42, won: true },
+    {
+      uuid: 'test-uuid-1',
+      name: 'Tester',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: undefined,
+      won: false,
+    },
+    {
+      uuid: 'test-uuid-2',
+      name: 'Other',
+      pic: 'data:image/png;base64,iVBORw0KGgo=',
+      guess: 42,
+      won: true,
+    },
   ],
   winningNumber: 42,
 };
 
 // ---- join helpers ----
 
-async function joinSession(page: Parameters<typeof test>[1] extends (args: { page: infer P }) => unknown ? P : never, options: { name?: string; mockState?: object } = {}) {
+async function joinSession(
+  page: Parameters<typeof test>[1] extends (args: { page: infer P }) => unknown
+    ? P
+    : never,
+  options: { name?: string; mockState?: object } = {},
+) {
   const { name = 'Tester', mockState = TWO_PLAYER_RUNNING_STATE } = options;
   await page.routeWebSocket(/.*/, (ws: WebSocketRoute) => {
     ws.onMessage(() => {
@@ -91,9 +161,13 @@ test.describe('Join page', () => {
     await expect(page.getByText('NUMVEIL')).toBeVisible();
   });
 
-  test('defaults to create-session mode with no session ID field', async ({ page }) => {
+  test('defaults to create-session mode with no session ID field', async ({
+    page,
+  }) => {
     await page.goto('/');
-    await expect(page.getByRole('button', { name: 'Create new session' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Create new session' }),
+    ).toBeVisible();
     await expect(page.getByLabel('Session ID')).toBeHidden();
   });
 
@@ -101,14 +175,18 @@ test.describe('Join page', () => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Join existing session' }).click();
     await expect(page.getByLabel('Session ID')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Join session' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Join session' }),
+    ).toBeVisible();
   });
 
   test('back button returns to create mode', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Join existing session' }).click();
     await page.getByRole('button', { name: '← Back' }).click();
-    await expect(page.getByRole('button', { name: 'Create new session' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Create new session' }),
+    ).toBeVisible();
     await expect(page.getByLabel('Session ID')).toBeHidden();
   });
 
@@ -185,7 +263,9 @@ test.describe('Home page', () => {
     await expect(playerList.getByText('Other')).toBeVisible();
   });
 
-  test('shows race-to-decide banner when no one has submitted yet', async ({ page }) => {
+  test('shows race-to-decide banner when no one has submitted yet', async ({
+    page,
+  }) => {
     await expect(page.getByText('Race to decide!')).toBeVisible();
   });
 
@@ -246,13 +326,16 @@ test.describe('Home page', () => {
 });
 
 test.describe('Home page – waiting for second player', () => {
-  test('shows waiting indicator when only one player is in session', async ({ page }) => {
+  test('shows waiting indicator when only one player is in session', async ({
+    page,
+  }) => {
     await joinSession(page, { mockState: ONE_PLAYER_RUNNING_STATE });
-    await expect(page.getByText('Waiting for another player to join')).toBeVisible();
+    await expect(
+      page.getByText('Waiting for another player to join'),
+    ).toBeVisible();
     await expect(page.getByLabel('Your number')).toBeHidden();
   });
 });
-
 
 test.describe('Result page', () => {
   test.beforeEach(async ({ page }) => {
@@ -289,7 +372,9 @@ test.describe('Result page', () => {
   });
 
   test('shows play again button', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Play again' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Play again' }),
+    ).toBeVisible();
   });
 
   test('shows leave button', async ({ page }) => {
@@ -364,7 +449,9 @@ test.describe('Result page – number decider view', () => {
     await expect(page).toHaveURL(/\/result/);
   });
 
-  test('shows "Your number was revealed" for number decider', async ({ page }) => {
+  test('shows "Your number was revealed" for number decider', async ({
+    page,
+  }) => {
     await expect(page.getByText('Your number was revealed')).toBeVisible();
   });
 

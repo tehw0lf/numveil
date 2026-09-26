@@ -5,18 +5,19 @@ A real-time multiplayer number guessing game built with Angular and NestJS.
 One player per session becomes the **number decider** — they submit a secret number first. All other players submit guesses. When all guesses are in, winners are calculated.
 
 **Two game modes** (auto-selected based on player count):
+
 - **Exact** — guess the exact number (2-player sessions)
 - **Distance** — closest guess wins (3+ player sessions)
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Angular 21 + Angular Material |
-| Backend | NestJS 11 + WebSocket (`ws`) |
-| Mobile | Capacitor 8 (Android) |
-| Monorepo | Nx 22 |
-| Container | Docker (nginx + node:alpine) |
+| Layer     | Technology                    |
+| --------- | ----------------------------- |
+| Frontend  | Angular 22 + Angular Material |
+| Backend   | NestJS 11 + WebSocket (`ws`)  |
+| Mobile    | Capacitor 8 (Android)         |
+| Monorepo  | Nx 23                         |
+| Container | Docker (nginx + node:alpine)  |
 
 ## Getting Started
 
@@ -32,7 +33,7 @@ npm install
 ### Development
 
 ```bash
-# Serve frontend (http://localhost:4200)
+# Serve frontend (http://localhost:4216)
 npx nx serve numveil
 
 # Serve backend (ws://localhost:4444)
@@ -68,18 +69,18 @@ docker build -f Dockerfile.app -t numveil-app .
 
 **Backend (`numveil-api`)**
 
-| Variable | Default | Description |
-|---|---|---|
-| `API_PORT` | `4444` | WebSocket server port |
-| `CORS_ORIGIN` | `http://localhost` | Allowed CORS origin |
-| `PORT` | `3000` | HTTP server port |
+| Variable      | Default            | Description           |
+| ------------- | ------------------ | --------------------- |
+| `API_PORT`    | `4444`             | WebSocket server port |
+| `CORS_ORIGIN` | `http://localhost` | Allowed CORS origin   |
+| `PORT`        | `3000`             | HTTP server port      |
 
 **Frontend (`numveil-app`)**
 
-| Variable | Default | Description |
-|---|---|---|
-| `API_URL` | `ws://localhost` | WebSocket URL |
-| `API_PORT` | `4444` | WebSocket server port |
+| Variable   | Default          | Description           |
+| ---------- | ---------------- | --------------------- |
+| `API_URL`  | `ws://localhost` | WebSocket URL         |
+| `API_PORT` | `4444`           | WebSocket server port |
 
 ### Example Docker Compose (with Traefik)
 
@@ -88,19 +89,19 @@ services:
   numveil-api:
     image: ghcr.io/tehw0lf/numveil-api:latest
     environment:
-      CORS_ORIGIN: "https://numveil.example.com"
+      CORS_ORIGIN: 'https://numveil.example.com'
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.numveil-api.rule=Host(`numveil.example.com`) && PathPrefix(`/ws`)"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.numveil-api.rule=Host(`numveil.example.com`) && PathPrefix(`/ws`)'
 
   numveil-app:
     image: ghcr.io/tehw0lf/numveil-app:latest
     environment:
-      API_URL: "wss://numveil.example.com"
-      API_PORT: "443"
+      API_URL: 'wss://numveil.example.com'
+      API_PORT: '443'
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.numveil-app.rule=Host(`numveil.example.com`)"
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.numveil-app.rule=Host(`numveil.example.com`)'
 ```
 
 ## Architecture
@@ -117,20 +118,20 @@ libs/
 
 **Client → Server**
 
-| Event | Payload | Description |
-|---|---|---|
-| `joinSession` | `{ uuid, sessionID, name }` | Create or join a session |
-| `guess` | `{ uuid, sessionID, guess }` | Submit a number |
-| `newRound` | `{ uuid, sessionID }` | Start a new round |
-| `leaveSession` | `{ uuid, sessionID }` | Leave session |
+| Event          | Payload                      | Description              |
+| -------------- | ---------------------------- | ------------------------ |
+| `joinSession`  | `{ uuid, sessionID, name }`  | Create or join a session |
+| `guess`        | `{ uuid, sessionID, guess }` | Submit a number          |
+| `newRound`     | `{ uuid, sessionID }`        | Start a new round        |
+| `leaveSession` | `{ uuid, sessionID }`        | Leave session            |
 
 **Server → Client**
 
-| Event | Description |
-|---|---|
-| `join` | Confirms join, returns `uuid`, `sessionID`, `pic` |
-| `running` | Broadcasts updated session state to all players |
-| `restart` | Signals a new round has started |
+| Event     | Description                                       |
+| --------- | ------------------------------------------------- |
+| `join`    | Confirms join, returns `uuid`, `sessionID`, `pic` |
+| `running` | Broadcasts updated session state to all players   |
+| `restart` | Signals a new round has started                   |
 
 ## Mobile (Android)
 

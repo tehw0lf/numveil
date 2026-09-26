@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Serve frontend (Angular, port 4200)
+# Serve frontend (Angular, port 4216)
 npx nx serve numveil
 
 # Serve backend (NestJS WebSocket API)
@@ -43,14 +43,17 @@ npm run affected:lint && npm run affected:test && npm run affected:build && npm 
 This is an Nx monorepo with three projects:
 
 - **`apps/api`** — NestJS WebSocket server (single file: `app.gateway.ts`)
-- **`apps/numveil`** — Angular 21 frontend (web + Android via Capacitor)
-- **`libs/core`** — Shared types and environment config imported by both apps as `@numveil/core`
+- **`apps/numveil`** — Angular 22 frontend (web + Android via Capacitor)
+- **`apps/numveil-e2e`** — Playwright E2E tests for the frontend
+
+Shared code lives in **`libs/core`**, a plain TypeScript folder (not an Nx project) mapped to `@numveil/core` in `tsconfig.base.json`.
 
 ### Game mechanics
 
 One player per session becomes the "number decider" — they submit a secret number first (`guess` is `undefined` in the server state for that player). Other players submit guesses. When all non-decider players have guessed, winners are calculated.
 
 **Two game modes** (auto-selected server-side):
+
 - `GameMode.exact` — players must guess the exact number (2-player sessions)
 - `GameMode.distance` — closest guess wins (3+ player sessions, switches automatically on third join)
 
@@ -58,18 +61,18 @@ One player per session becomes the "number decider" — they submit a secret num
 
 All messages use `{ event: string, data: any }` from client and `{ eventType: string, serverState: any }` from server.
 
-| Client event | Purpose |
-|---|---|
-| `joinSession` | Create or join a session (omit `sessionID` to create new) |
-| `guess` | Submit a number (first submission becomes the secret number) |
-| `newRound` | Reset the current session for another round |
-| `leaveSession` | Remove self from session |
+| Client event   | Purpose                                                      |
+| -------------- | ------------------------------------------------------------ |
+| `joinSession`  | Create or join a session (omit `sessionID` to create new)    |
+| `guess`        | Submit a number (first submission becomes the secret number) |
+| `newRound`     | Reset the current session for another round                  |
+| `leaveSession` | Remove self from session                                     |
 
-| Server event | Purpose |
-|---|---|
-| `join` | Confirms join, sends back `uuid`, `sessionID`, `pic` |
-| `running` | Broadcasts updated session state to all players |
-| `restart` | Signals a new round has started |
+| Server event | Purpose                                              |
+| ------------ | ---------------------------------------------------- |
+| `join`       | Confirms join, sends back `uuid`, `sessionID`, `pic` |
+| `running`    | Broadcasts updated session state to all players      |
+| `restart`    | Signals a new round has started                      |
 
 ### Frontend state management
 
@@ -82,7 +85,7 @@ Route guards (`RouteGuard`) prevent direct navigation to `/home` or `/result` wi
 - `environment.ts` — `api_url`, `api_port` (4444), `baseRoutePath`
 - `types/` — `Player`, `GameMode`, `SessionUser`, `UserInfo`
 
-The environment file is the single source of truth for the WebSocket URL used by both the frontend client and the backend `@WebSocketGateway` decorator.
+The backend `@WebSocketGateway` decorator takes its port from `API_PORT`, falling back to `environment.api_port`. The frontend does not import the environment: `ConfigService` loads `api_url`/`api_port` at runtime from `/config.json` (`apps/numveil/public/config.json` in development, written by `docker-entrypoint.sh` in the container), and a server URL the user sets is kept in `localStorage`.
 
 ### Mobile
 

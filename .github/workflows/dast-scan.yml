@@ -2,7 +2,7 @@ name: weekly dast scan
 
 on:
   schedule:
-    - cron: "0 3 * * 1"
+    - cron: '0 3 * * 1'
   workflow_dispatch:
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       issues: write
       security-events: write
     with:
-      target_url: "https://numveil.tehwolf.de"
-      scan_type: "full"
+      target_url: 'https://numveil.tehwolf.de'
+      scan_type: 'full'
       max_duration_minutes: 45
-      rules_file: ".zap/rules.tsv"
+      rules_file: '.zap/rules.tsv'

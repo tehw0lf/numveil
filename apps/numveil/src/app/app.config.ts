@@ -13,8 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: ConfigService) => () =>
-        configService.load(),
+      useFactory: (configService: ConfigService) => () => configService.load(),
       deps: [ConfigService],
       multi: true,
     },

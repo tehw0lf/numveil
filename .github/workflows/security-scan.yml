@@ -15,7 +15,7 @@ name: Security Monitoring
 on:
   schedule:
     # Run daily at 2:00 AM UTC
-    - cron: "0 2 * * *"
+    - cron: '0 2 * * *'
   workflow_dispatch:
     # Allow manual triggering
 
@@ -36,10 +36,10 @@ jobs:
       actions: read
       pull-requests: write
     with:
-      tool: "npm"
-      semgrep_rules: "auto p/security-audit p/owasp-top-ten p/ci p/nodejs p/typescript"
+      tool: 'npm'
+      semgrep_rules: 'auto p/security-audit p/owasp-top-ten p/ci p/nodejs p/typescript'
       npm_audit_omit_dev: true
-      npm_audit_severity_threshold: "high"
+      npm_audit_severity_threshold: 'high'
       # Re-enables the CodeQL analysis this repo last ran in Nov 2024. Its four
       # js/insecure-randomness alerts were fixed in code long ago, but code
       # scanning can only close an alert that a later CodeQL run stops
@@ -49,7 +49,7 @@ jobs:
       # analysis adopts - and closes - the four stale js/insecure-randomness
       # alerts it left behind. Code scanning only closes an alert that a later
       # run of the same tool AND category stops reporting.
-      codeql_category: ".github/workflows/codeql-analysis.yml:analyze"
+      codeql_category: '.github/workflows/codeql-analysis.yml:analyze'
 
   # Download artifacts from latest CI build
   # Note: Reuses artifacts from the main CI workflow instead of rebuilding
@@ -85,5 +85,5 @@ jobs:
       security-events: write
       actions: read
     with:
-      tool: "npm"
-      artifact_path: "dist"
+      tool: 'npm'
+      artifact_path: 'dist'

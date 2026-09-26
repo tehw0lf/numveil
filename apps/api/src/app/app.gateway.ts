@@ -64,7 +64,7 @@ export class AppGateway
           this.leaveSession(client.sessionID, uuid);
           clientUuid = uuid;
         }
-      }
+      },
     );
     connectedClients.delete(clientUuid);
     this.logger.log(`Client ${clientUuid} disconnected.`);
@@ -76,7 +76,7 @@ export class AppGateway
     data: {
       uuid: string;
       sessionID: string;
-    }
+    },
   ): void {
     if (!data) return;
     this.logger.log(`'leaveSession': ${JSON.stringify(data)}`);
@@ -97,7 +97,7 @@ export class AppGateway
   @SubscribeMessage('newRound')
   handleIncomingNewRoundMessage(
     clientSocket: WebSocket,
-    data: { uuid: string; sessionID: string }
+    data: { uuid: string; sessionID: string },
   ): void {
     if (!data) return;
     this.logger.log(`'newRound': ${JSON.stringify(data)}`);
@@ -118,7 +118,7 @@ export class AppGateway
   @SubscribeMessage('guess')
   handleIncomingGuessMessage(
     clientSocket: WebSocket,
-    data: { uuid: string; sessionID: string; guess: number }
+    data: { uuid: string; sessionID: string; guess: number },
   ): void {
     if (!data) return;
     if (!winningNumbers.get(data.sessionID)) {
@@ -147,14 +147,14 @@ export class AppGateway
     this.broadcastToClients(
       data.sessionID,
       'running',
-      sessionInfo.get(data.sessionID)
+      sessionInfo.get(data.sessionID),
     );
   }
 
   @SubscribeMessage('joinSession')
   handleInitializeClientMessage(
     clientSocket: WebSocket,
-    data: { uuid: string; sessionID: string; name: string }
+    data: { uuid: string; sessionID: string; name: string },
   ): void {
     if (!data) return;
     const newSessionID = data.sessionID
@@ -201,7 +201,7 @@ export class AppGateway
         if (sessionInfo.get(data.sessionID).players.length > 2) {
           sessionInfo.get(data.sessionID).gameMode = GameMode.distance;
           this.logger.log(
-            `Third player has connected, switching game mode to distance for ${data.sessionID}`
+            `Third player has connected, switching game mode to distance for ${data.sessionID}`,
           );
         }
       }
@@ -220,12 +220,12 @@ export class AppGateway
           pic,
           sessionID: newSessionID,
         },
-      })
+      }),
     );
     this.broadcastToClients(
       newSessionID,
       'running',
-      sessionInfo.get(newSessionID)
+      sessionInfo.get(newSessionID),
     );
   }
 
@@ -245,7 +245,7 @@ export class AppGateway
   private broadcastToClients(
     sessionID: string,
     eventType: string,
-    serverState: any
+    serverState: any,
   ): void {
     sessionInfo.get(sessionID).players.forEach((player: Player) => {
       connectedClients
@@ -276,7 +276,7 @@ export class AppGateway
 
   private calculateWinners(
     sessionID: string,
-    guesses: { uuid: string; guess: number }[]
+    guesses: { uuid: string; guess: number }[],
   ): void {
     let currentWinners: string[];
     let currentWinningDistance = Math.min(); //Infinity
@@ -323,7 +323,7 @@ export class AppGateway
         this.broadcastToClients(
           sessionID,
           'running',
-          sessionInfo.get(sessionID)
+          sessionInfo.get(sessionID),
         );
       }
     }
