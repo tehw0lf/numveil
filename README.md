@@ -32,7 +32,7 @@ npm install
 ### Development
 
 ```bash
-# Serve frontend (http://localhost:4200)
+# Serve frontend (http://localhost:4216)
 npx nx serve numveil
 
 # Serve backend (ws://localhost:4444)
