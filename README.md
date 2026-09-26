@@ -13,10 +13,10 @@ One player per session becomes the **number decider** — they submit a secret n
 
 | Layer     | Technology                    |
 | --------- | ----------------------------- |
-| Frontend  | Angular 21 + Angular Material |
+| Frontend  | Angular 22 + Angular Material |
 | Backend   | NestJS 11 + WebSocket (`ws`)  |
 | Mobile    | Capacitor 8 (Android)         |
-| Monorepo  | Nx 22                         |
+| Monorepo  | Nx 23                         |
 | Container | Docker (nginx + node:alpine)  |
 
 ## Getting Started
