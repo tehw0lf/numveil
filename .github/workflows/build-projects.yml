@@ -37,3 +37,4 @@ jobs:
       npm_audit_omit_dev: true
     secrets:
       ANDROID_STOREPASS: ${{ secrets.ANDROID_STOREPASS }}
+      ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
