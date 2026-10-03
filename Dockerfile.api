@@ -1,22 +1,12 @@
 FROM node:24.17-alpine
-# npm bundles its own dependency tree, and the versions shipped with the current
-# npm release still carry known CVEs. Overwrite them with patched releases,
-# staying within each package's existing major so npm keeps working.
-# Recheck against `trivy image` when bumping the base image or npm.
-RUN apk upgrade --no-cache && npm install -g npm@latest \
-  && for spec in \
-       brace-expansion@5.0.12 \
-       ip-address@10.7.1 \
-       tar@7.5.21 \
-       undici@6.28.1 ; do \
-       name="${spec%@*}" ; \
-       npm pack "$spec" --pack-destination /tmp \
-       && tar -xzf /tmp/"$name"-*.tgz -C /tmp \
-       && cp -r /tmp/package/. "/usr/local/lib/node_modules/npm/node_modules/$name/" \
-       && rm -rf /tmp/package /tmp/*.tgz ; \
-     done
+RUN apk upgrade --no-cache
 WORKDIR /usr/src/app
 COPY dist/api/* ./
 RUN npm install --omit=dev
+# npm is only needed for the install above. It bundles its own dependency tree
+# (http-cache-semantics, tar, undici, ...), and CVEs in those show up faster than
+# the bundled releases do - http-cache-semantics has no patched release at all.
+# The API starts with `node`, so remove npm and npx instead of chasing them.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 EXPOSE 3000
 CMD ["node", "main"]
