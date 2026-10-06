@@ -3,6 +3,11 @@ RUN apk upgrade --no-cache
 WORKDIR /usr/src/app
 COPY dist/api/* ./
 RUN npm install --omit=dev
+# The lockfile in dist/api is pruned from the root lockfile by the build, and the
+# pruning can place a nested package where another version is expected. Fail the
+# image build on such a tree. --all is required: without it npm ls only checks
+# the top-level dependencies.
+RUN npm ls --omit=dev --all > /dev/null
 # npm is only needed for the install above. It bundles its own dependency tree
 # (http-cache-semantics, tar, undici, ...), and CVEs in those show up faster than
 # the bundled releases do - http-cache-semantics has no patched release at all.
