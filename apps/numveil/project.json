@@ -64,6 +64,9 @@
         "development": {
           "buildTarget": "numveil:build:development"
         }
+      },
+      "readyWhen": {
+        "signal": true
       }
     },
     "extract-i18n": {
@@ -93,16 +96,16 @@
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
+      "readyWhen": {
+        "signal": true
+      },
+      "dependsOn": ["build"],
       "options": {
         "buildTarget": "numveil:build",
         "port": 4200,
         "staticFilePath": "dist/numveil/browser",
         "spa": true
-      },
-      "readyWhen": {
-        "signal": true
-      },
-      "dependsOn": ["build"]
+      }
     },
     "cap": {
       "executor": "@nxext/capacitor:cap",
