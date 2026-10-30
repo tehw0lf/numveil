@@ -52,11 +52,11 @@
     },
     "serve": {
       "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "continuous": true,
       "options": {
         "port": 4216
       },
-      "defaultConfiguration": "development",
-      "continuous": true,
       "configurations": {
         "production": {
           "buildTarget": "numveil:build:production"
@@ -98,7 +98,11 @@
         "port": 4200,
         "staticFilePath": "dist/numveil/browser",
         "spa": true
-      }
+      },
+      "readyWhen": {
+        "signal": true
+      },
+      "dependsOn": ["build"]
     },
     "cap": {
       "executor": "@nxext/capacitor:cap",
