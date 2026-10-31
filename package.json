@@ -62,7 +62,7 @@
     "@nx/workspace": "24.0.3",
     "@nxext/capacitor": "23.0.0",
     "@playwright/test": "1.61.0",
-    "@schematics/angular": "22.2.4",
+    "@schematics/angular": "22.2.5",
     "@swc-node/register": "1.11.1",
     "@swc/core": "1.15.41",
     "@swc/helpers": "0.5.23",
