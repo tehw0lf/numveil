@@ -20,17 +20,6 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "inputs": [
-        "default",
-        "^default",
-        "{workspaceRoot}/.eslintrc.json",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint.config.js",
-        "{workspaceRoot}/tools/eslint-rules/**/*"
-      ]
-    },
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
     },
@@ -105,12 +94,6 @@
     "@schematics/angular:service": {
       "type": "service"
     },
-    "@nx/angular:scam": {
-      "type": "component"
-    },
-    "@nx/angular:scam-directive": {
-      "type": "directive"
-    },
     "@nx/angular:guard": {
       "typeSeparator": "."
     },
@@ -145,5 +128,8 @@
   "analytics": false,
   "migrate": {
     "agentic": true
+  },
+  "affected": {
+    "legacy": true
   }
 }
