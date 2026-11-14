@@ -40,6 +40,16 @@ npx nx serve numveil
 npx nx serve api
 ```
 
+### Regenerating the lockfile
+
+Prefer targeted updates (`npm install <pkg>@<version>`). When the whole lockfile has to be regenerated, remove `node_modules` together with the lockfile, never the lockfile alone:
+
+```bash
+rm -rf node_modules package-lock.json && npm install
+```
+
+A lockfile written over an existing `node_modules` can come back without `resolved` and `integrity` for packages npm did not fetch (for example when `node_modules` has no current `node_modules/.package-lock.json`). The same applies in `apps/numveil`. A full regeneration re-resolves all transitive ranges and moves versions. `npm run lint:lockfile` checks that every registry entry (a `node_modules/...` key, except links and bundled dependencies) of both lockfiles carries both fields; it also runs as part of `npm run lint` and `npm run affected:lint`.
+
 ### Testing
 
 ```bash

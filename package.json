@@ -1,16 +1,17 @@
 {
   "name": "@numveil/source",
-  "version": "2.1.50",
+  "version": "2.1.51",
   "license": "MIT",
   "scripts": {
     "affected:e2e": "nx affected:e2e",
-    "affected:lint": "nx affected:lint",
+    "affected:lint": "npm run lint:lockfile && nx affected:lint",
     "affected:test": "nx affected:test --configuration=ci",
     "affected:build": "nx affected:build",
     "build": "nx run-many -t build",
     "affected": "nx affected",
     "sync": "nx run numveil:sync",
-    "lint": "nx run-many -t lint",
+    "lint": "npm run lint:lockfile && nx run-many -t lint",
+    "lint:lockfile": "node tools/check-lockfile-integrity.mjs",
     "test": "nx run-many -t test",
     "e2e": "nx e2e numveil-e2e"
   },
