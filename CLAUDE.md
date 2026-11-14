@@ -38,6 +38,10 @@ npm run sync                   # Sync web assets to Android project
 npm run affected:lint && npm run affected:test && npm run affected:build && npm run affected:e2e
 ```
 
+### Lockfile
+
+Regenerate a lockfile only together with `node_modules` (`rm -rf node_modules package-lock.json && npm install`), never by removing the lockfile alone: that drops `resolved` and `integrity` from entries. `npm run lint:lockfile` (part of `lint` and `affected:lint`) fails when an entry of `package-lock.json` or `apps/numveil/package-lock.json` lacks either field.
+
 ## Architecture
 
 This is an Nx monorepo with three projects:
