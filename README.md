@@ -48,7 +48,7 @@ Prefer targeted updates (`npm install <pkg>@<version>`). When the whole lockfile
 rm -rf node_modules package-lock.json && npm install
 ```
 
-A lockfile written over an existing `node_modules` comes back without `resolved` and `integrity` for every package npm did not fetch. The same applies in `apps/numveil`. A full regeneration re-resolves all transitive ranges and moves versions. `npm run lint:lockfile` checks that every entry of both lockfiles carries both fields; it also runs as part of `npm run lint` and `npm run affected:lint`.
+A lockfile written over an existing `node_modules` can come back without `resolved` and `integrity` for packages npm did not fetch (for example when `node_modules` has no current `node_modules/.package-lock.json`). The same applies in `apps/numveil`. A full regeneration re-resolves all transitive ranges and moves versions. `npm run lint:lockfile` checks that every registry entry (a `node_modules/...` key, except links and bundled dependencies) of both lockfiles carries both fields; it also runs as part of `npm run lint` and `npm run affected:lint`.
 
 ### Testing
 

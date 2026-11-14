@@ -38,8 +38,15 @@ for (const file of files) {
 
   const offenders = [];
   for (const [key, entry] of Object.entries(lock.packages)) {
-    // The root entry, workspace links and bundled dependencies carry no tarball.
-    if (key === '' || entry?.link === true || entry?.inBundle === true) {
+    // Entries that carry no tarball are exempt: the root entry, links and
+    // bundled dependencies, and the entries of workspace and `file:` folders,
+    // which are keyed by their folder path instead of a `node_modules/` path.
+    if (
+      key === '' ||
+      !key.startsWith('node_modules/') ||
+      entry?.link === true ||
+      entry?.inBundle === true
+    ) {
       continue;
     }
     const missing = ['resolved', 'integrity'].filter(
