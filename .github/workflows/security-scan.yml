@@ -32,6 +32,7 @@ jobs:
     uses: tehw0lf/workflows/.github/workflows/security-scan-source.yml@main
     permissions:
       contents: write
+      issues: write
       security-events: write
       actions: read
       pull-requests: write
