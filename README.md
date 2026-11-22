@@ -92,7 +92,7 @@ docker build -f Dockerfile.app -t numveil-app .
 | `API_URL`  | `ws://localhost` | WebSocket URL         |
 | `API_PORT` | `4444`           | WebSocket server port |
 
-`API_URL` is the scheme and host only (`ws://` or `wss://`, no path, no trailing slash); `API_PORT` is a number from 1 to 65535. The container refuses to start with other values. It adds `API_URL:API_PORT` to the `connect-src` directive of the Content Security Policy next to `'self'`, so on the web the "Server URL" field can only reach the page's own origin and the configured server (the Android app is not restricted by this policy).
+`API_URL` is the scheme and a host name or IPv4 address only (scheme `ws` or `wss`, no path, no trailing slash; an IPv6 literal is refused because the policy cannot express it); `API_PORT` is a number from 1 to 65535. The container refuses to start with other values. It adds `API_URL:API_PORT` to the `connect-src` directive of the Content Security Policy next to `'self'`, so on the web the "Server URL" field can only reach the page's own origin and the configured server (the Android app is not restricted by this policy).
 
 ### Example Docker Compose (with Traefik)
 
