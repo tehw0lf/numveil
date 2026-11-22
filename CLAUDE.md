@@ -89,7 +89,7 @@ Route guards (`RouteGuard`) prevent direct navigation to `/home` or `/result` wi
 - `environment.ts` — `api_url`, `api_port` (4444), `baseRoutePath`
 - `types/` — `Player`, `GameMode`, `SessionUser`, `UserInfo`
 
-The backend `@WebSocketGateway` decorator takes its port from `API_PORT`, falling back to `environment.api_port`. The frontend does not import the environment: `ConfigService` loads `api_url`/`api_port` at runtime from `/config.json` (`apps/numveil/public/config.json` in development, written by `docker-entrypoint.sh` in the container), and a server URL the user sets is kept in `localStorage`.
+The backend `@WebSocketGateway` decorator takes its port from `API_PORT`, falling back to `environment.api_port`. The frontend does not import the environment: `ConfigService` loads `api_url`/`api_port` at runtime from `/config.json` (`apps/numveil/public/config.json` in development, written by `docker-entrypoint.sh` in the container, which also writes `connect-src` into `security-headers.conf` from `security-headers.conf.template`), and a server URL the user sets is kept in `localStorage`.
 
 ### Mobile
 
