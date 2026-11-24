@@ -11,6 +11,7 @@ const defaults = ['package-lock.json', 'apps/numveil/package-lock.json'].map(
 );
 const files = process.argv.length > 2 ? process.argv.slice(2) : defaults;
 const maxListed = 50;
+const nodeModulesSegment = /(^|\/)node_modules\//;
 const hint =
   'Regenerate the lockfile together with node_modules, never the lockfile alone (see "Regenerating the lockfile" in README.md).';
 
@@ -38,12 +39,14 @@ for (const file of files) {
 
   const offenders = [];
   for (const [key, entry] of Object.entries(lock.packages)) {
-    // Entries that carry no tarball are exempt: the root entry, links and
-    // bundled dependencies, and the entries of workspace and `file:` folders,
-    // which are keyed by their folder path instead of a `node_modules/` path.
+    // Registry entries are the keys with a `node_modules/` segment, also those
+    // nested under a workspace or `file:` folder. Entries that carry no tarball
+    // are exempt: the root entry, links and bundled dependencies, and the
+    // entries of the workspace and `file:` folders themselves, which are keyed
+    // by their folder path and have no `node_modules/` segment.
     if (
       key === '' ||
-      !key.startsWith('node_modules/') ||
+      !nodeModulesSegment.test(key) ||
       entry?.link === true ||
       entry?.inBundle === true
     ) {
