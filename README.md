@@ -92,7 +92,7 @@ docker build -f Dockerfile.app -t numveil-app .
 | `API_URL`  | `ws://localhost` | WebSocket URL         |
 | `API_PORT` | `4444`           | WebSocket server port |
 
-`API_URL` is the scheme and a host name or IPv4 address only (scheme `ws` or `wss`, no path, no trailing slash; an IPv6 literal is refused because the policy cannot express it); `API_PORT` is a number from 1 to 65535. The container refuses to start with other values. It adds `API_URL:API_PORT` to the `connect-src` directive of the Content Security Policy next to `'self'`, so on the web the "Server URL" field can only reach the page's own origin and the configured server (the Android app is not restricted by this policy).
+`API_URL` is the scheme (`ws` or `wss`) and a host name or IPv4 address, optionally followed by a path without trailing slash (for a proxy that routes by path prefix, such as `wss://numveil.example.com/ws`); it takes no port and no IPv6 literal (the policy cannot express one). `API_PORT` is a number from 1 to 65535, or empty to connect to `API_URL` without a port; it only falls back to `4444` when it is not set at all. The container refuses to start with other values. It adds the origin of the server (scheme and host of `API_URL`, plus `API_PORT` when set, never the path) to the `connect-src` directive of the Content Security Policy next to `'self'`, so on the web the "Server URL" field can only reach the page's own origin and the configured server (the Android app is not restricted by this policy).
 
 ### Example Docker Compose (with Traefik)
 
@@ -109,8 +109,8 @@ services:
   numveil-app:
     image: ghcr.io/tehw0lf/numveil-app:latest
     environment:
-      API_URL: 'wss://numveil.example.com'
-      API_PORT: '443'
+      API_URL: 'wss://numveil.example.com/ws'
+      API_PORT: ''
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.numveil-app.rule=Host(`numveil.example.com`)'
